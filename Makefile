@@ -8,13 +8,15 @@ INCLUDES 	= ./includes/
 SRCDIR 		= ./src/
 OBJ_PATH	= ./obj/
 
-SRC 		= 	main.c \
+SRC 		=	main.c \
 				ft_atoi.c \
+				ft_atol.c \
 				ft_calloc.c \
 				ft_itoa.c \
 				ft_strlen.c \
 				ft_bzero.c \
 				ft_memset.c \
+				init_philo.c \
 
 
 
@@ -28,6 +30,7 @@ CFI 		= -I$(INCLUDES)
 LEAKS 		= valgrind \
 				--leak-check=full \
 				--show-leak-kinds=all \
+
 LEAKS_FILE	= valgrind-out.txt
 
 # --suppressions=./local.supp --leak-check=full --track-origins=yes --show-leak-kinds=all

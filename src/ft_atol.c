@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_atol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: daeidi-h <daeidi-h@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 18:10:53 by daeidi-h          #+#    #+#             */
-/*   Updated: 2022/10/20 19:16:47 by daeidi-h         ###   ########.fr       */
+/*   Updated: 2022/10/20 19:14:12 by daeidi-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ static int	ft_isdigit(int c)
 		return (0);
 }
 
-int	ft_atoi(const char *str)
+long long	ft_atol(const char *str)
 {
-	unsigned long	nbr;
-	unsigned long	sign;
-	unsigned int	i;
+	unsigned long long		nbr;
+	unsigned long		sign;
+	unsigned long		i;
 
 	nbr = 0;
 	sign = 1;
@@ -49,5 +49,5 @@ int	ft_atoi(const char *str)
 		nbr = nbr * 10 + str[i] - '0';
 		i++;
 	}
-	return ((int)(nbr * sign));
+	return ((long long)(nbr * sign));
 }

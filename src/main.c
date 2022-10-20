@@ -6,7 +6,7 @@
 /*   By: daeidi-h <daeidi-h@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:55:24 by daeidi-h          #+#    #+#             */
-/*   Updated: 2022/10/20 14:54:01 by daeidi-h         ###   ########.fr       */
+/*   Updated: 2022/10/20 19:28:17 by daeidi-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,70 +14,38 @@
 
 void print_actual_time(int long init, pthread_mutex_t *print_lock);
 void*	philo_routine(void *args);
-t_ph_status	**init_ph_stats(int n_philo, long init);
-
-int main (void)
+long init_time (void)
 {
 	struct timeval tv;
 	struct timezone tz;
-	// pthread_t philo1;
-	// pthread_t philo2;
-	int long init;
-	long end;
-	long diff;
-	t_ph_status	**ph_stats;
-	//char *str_diff;
+	long init;
 
 	gettimeofday(&tv,&tz);
 	init = tv.tv_sec * 1000000 + tv.tv_usec;
-
-	//philo_routine(ph_stats->init);
-	
-	ph_stats = init_ph_stats(2, init);
-	printf("&ph_stats[0]->print_lock = %p\n", ph_stats[0]->print_lock);
-	printf("&ph_stats[1]->print_lock = %p\n", ph_stats[1]->print_lock);
-	pthread_create(&ph_stats[0]->pthread_ph, NULL, &philo_routine, ph_stats[0]);
-	pthread_create(&ph_stats[1]->pthread_ph, NULL, &philo_routine, ph_stats[1]);
-	pthread_join(ph_stats[0]->pthread_ph, NULL);
-	pthread_join(ph_stats[1]->pthread_ph, NULL);
-	gettimeofday(&tv,&tz);
-	end = tv.tv_sec * 1000000 + tv.tv_usec;
-	diff = (end - init)/1000;
-	//printf("ms: %ld -----fim-------\n",diff);
-	//str_diff = ft_itoa(diff);
-	printf("ms: %ld\n ",diff);
-	//write(1, "ms: ", 4);
-	//write(1, str_diff, ft_strlen(str_diff));
-
-	return(0);
+	return (init);
 }
-
-t_ph_status	**init_ph_stats(int n_philo, long init)
+int	main(int argc, char **argv)
 {
+	int long init;
 	t_ph_status	**ph_stats;
 	int i;
-	pthread_mutex_t *print_lock;
 
-	i = 0;
-	print_lock = malloc (sizeof(pthread_mutex_t));
-	pthread_mutex_init(print_lock, NULL);
-	ph_stats = calloc(sizeof(t_ph_status *), 1);
-	while (i < n_philo)
-	{
-		ph_stats[i] = calloc(sizeof(t_ph_status), 1);
-		ph_stats[i]->init = init;
-		ph_stats[i]->lst_philos_meal = init;
-		ph_stats[i]->id = i + 1;
-		ph_stats[i]->print_lock = print_lock;
-		i++;
-	}
-	ph_stats[i] = calloc(sizeof(t_ph_status), 1);
-	return(ph_stats);
+	(void)argc;
+	init = init_time();
+	ph_stats = init_ph_stats(argv, init);
+	i = -1;
+	while (++i < ph_stats[0]->total_ph)
+		pthread_create(&ph_stats[i]->pthread_ph, NULL, &philo_routine, ph_stats[i]);
+	i = -1;
+	while (++i < ph_stats[0]->total_ph)
+		pthread_join(ph_stats[i]->pthread_ph, NULL);
+	return(0);
 }
 
 void*	philo_routine(void *args)
 {
 	int long	init;
+	long	dif;
 	t_ph_status	*ph_stats;
 
 	ph_stats = (t_ph_status *) args;
@@ -85,45 +53,79 @@ void*	philo_routine(void *args)
 	(void)init;
 	while (1)
 	{
-		pthread_mutex_lock(ph_stats->print_lock);
-		print_actual_time(init, ph_stats->print_lock);
-		printf("philo %d comendo por 200ms\n", ph_stats->id);
-		pthread_mutex_unlock(ph_stats->print_lock);
-		//write(1, " comendo por 200ms\n", 20);
-		//printf("comendo por 200ms\n");
-		usleep(200000);
+		if (ph_stats->id % 2)
+		{
+			pthread_mutex_lock(ph_stats->right_fork);
+			pthread_mutex_lock(ph_stats->print_lock);
+			print_actual_time(init, ph_stats->print_lock);
+			printf("philo %d pegou um garfo\n", ph_stats->id);
+			pthread_mutex_unlock(ph_stats->print_lock);
+			pthread_mutex_lock(ph_stats->left_fork);
+			pthread_mutex_lock(ph_stats->print_lock);
+			print_actual_time(init, ph_stats->print_lock);
+			dif = current_time(init) - ph_stats->lst_philos_meal;
+			printf("philo %d pegou segundo garfo  e iniciou a comer após %ld ms de jejum\n", ph_stats->id, dif);
+			pthread_mutex_unlock(ph_stats->print_lock);
+			usleep(ph_stats->t_eat);
+			pthread_mutex_unlock(ph_stats->right_fork);
+			pthread_mutex_unlock(ph_stats->left_fork);
+		}
+		else
+		{
+			pthread_mutex_lock(ph_stats->left_fork);
+			pthread_mutex_lock(ph_stats->print_lock);
+			print_actual_time(init, ph_stats->print_lock);
+			printf("philo %d pegou um garfo\n", ph_stats->id);
+			pthread_mutex_unlock(ph_stats->print_lock);
+			pthread_mutex_lock(ph_stats->right_fork);
+			pthread_mutex_lock(ph_stats->print_lock);
+			print_actual_time(init, ph_stats->print_lock);
+			dif = current_time(init) - ph_stats->lst_philos_meal;
+			printf("philo %d pegou segundo garfo  e iniciou a comer após %ld ms de jejum\n", ph_stats->id, dif);
+			pthread_mutex_unlock(ph_stats->print_lock);
+			usleep(ph_stats->t_eat);
+			pthread_mutex_unlock(ph_stats->left_fork);
+			pthread_mutex_unlock(ph_stats->right_fork);
+		}
+		ph_stats->lst_philos_meal = current_time(init);
+		ph_stats->n_eat++;
 		pthread_mutex_lock(ph_stats->print_lock);
 		print_actual_time(init, ph_stats->print_lock);
 		printf("philo %d dormindo por 200ms\n", ph_stats->id);
 		pthread_mutex_unlock(ph_stats->print_lock);
 		//write(1, " dormindo por 200ms\n", 21);
 		//printf("dormindo por 200ms\n");
-		usleep(200000);
+		usleep(ph_stats->t_sleep);
 		pthread_mutex_lock(ph_stats->print_lock);
 		print_actual_time(init, ph_stats->print_lock);
-		printf("philo %d pensando por 200ms\n", ph_stats->id);
+		printf("philo %d pensando\n", ph_stats->id);
 		pthread_mutex_unlock(ph_stats->print_lock);
 		//write(1, " pensando por 200ms\n", 21);
 		//printf("pensando por 200ms\n");
-		usleep(200000);
+		//usleep(200000);
 	}
 	return(NULL);
 }
 
-void print_actual_time(int long init, pthread_mutex_t *print_lock)
+long	current_time(long init)
 {
 	struct timeval tv;
 	struct timezone tz;
 	long now;
 	long diff;
-	//char *str_diff;
-	(void) print_lock;
 
-	gettimeofday(&tv,&tz);
+	gettimeofday(&tv, &tz);
 	now = tv.tv_sec * 1000000 + tv.tv_usec;
 	diff = (now - init)/1000;
-	//str_diff = ft_itoa(diff);
-	//pthread_mutex_unlock(print_lock);
+	return (diff);
+}
+
+void print_actual_time(int long init, pthread_mutex_t *print_lock)
+{
+	long diff;
+	(void) print_lock;
+
+	diff = current_time(init);
 	printf("ms: %ld ",diff);
 	//pthread_mutex_unlock(print_lock);
 	// write(1, "ms: ", 4);
