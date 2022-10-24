@@ -48,11 +48,21 @@ void death_monitor (t_ph_status	**ph_stats)
 	}
 }
 
+void*	thread_monitor(void *args)
+{
+	t_ph_status	**ph_stats;
+
+	ph_stats = (t_ph_status **) args;
+	while (1)
+		death_monitor(ph_stats);
+}
+
 int	main(int argc, char **argv)
 {
 	long init;
 	t_ph_status	**ph_stats;
 	int i;
+	pthread_t	monitor;
 
 	(void)argc;
 	init = init_time();
@@ -66,8 +76,10 @@ int	main(int argc, char **argv)
 	i = -1;
 	while (++i < ph_stats[0]->total_ph)
 		pthread_join(ph_stats[i]->pthread_ph, NULL);
-	while (1)
-		death_monitor(ph_stats);
+	
+	pthread_create(&monitor, NULL, &thread_monitor, ph_stats);
+	pthread_join(monitor, NULL);
+	
 	return(0);
 }
 
