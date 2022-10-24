@@ -6,7 +6,7 @@
 /*   By: daeidi-h <daeidi-h@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:55:24 by daeidi-h          #+#    #+#             */
-/*   Updated: 2022/10/21 10:40:09 by daeidi-h         ###   ########.fr       */
+/*   Updated: 2022/10/22 20:44:54 by daeidi-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,30 @@ long init_time (void)
 	init = tv.tv_sec * 1000000 + tv.tv_usec;
 	return (init);
 }
+
+void death_monitor (t_ph_status	**ph_stats)
+{
+	int	i;
+	long dif;
+
+	i = 0;
+	dif = 0;
+	
+	printf("entrei na death_monitor\n\n\n");
+	while (i < ph_stats[0]->total_ph)
+	{
+		dif = current_time(ph_stats[i]->init) - ph_stats[i]->lst_philos_meal;
+		if(dif > (ph_stats[i]->t_die/1000))
+		{
+			pthread_mutex_unlock(ph_stats[i]->print_lock);
+			print_actual_time(ph_stats[i]->init, ph_stats[i]->print_lock);
+			printf("philo %d com %ld de jejum entrou na morte !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n\n\n\n\n\n\n", ph_stats[i]->id, dif);
+			exit(0); //colocar os frees
+		}
+		i++;
+	}
+}
+
 int	main(int argc, char **argv)
 {
 	long init;
@@ -42,6 +66,8 @@ int	main(int argc, char **argv)
 	i = -1;
 	while (++i < ph_stats[0]->total_ph)
 		pthread_join(ph_stats[i]->pthread_ph, NULL);
+	while (1)
+		death_monitor(ph_stats);
 	return(0);
 }
 
