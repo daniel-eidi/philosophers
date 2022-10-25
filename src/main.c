@@ -6,7 +6,7 @@
 /*   By: daeidi-h <daeidi-h@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:55:24 by daeidi-h          #+#    #+#             */
-/*   Updated: 2022/10/22 20:44:54 by daeidi-h         ###   ########.fr       */
+/*   Updated: 2022/10/25 11:45:25 by daeidi-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,15 @@ void death_monitor (t_ph_status	**ph_stats)
 	i = 0;
 	dif = 0;
 	
-	printf("entrei na death_monitor\n\n\n");
+
 	while (i < ph_stats[0]->total_ph)
 	{
 		dif = current_time(ph_stats[i]->init) - ph_stats[i]->lst_philos_meal;
 		if(dif > (ph_stats[i]->t_die/1000))
 		{
-			pthread_mutex_unlock(ph_stats[i]->print_lock);
+			pthread_mutex_lock(ph_stats[i]->print_lock);
 			print_actual_time(ph_stats[i]->init, ph_stats[i]->print_lock);
-			printf("philo %d com %ld de jejum entrou na morte !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n\n\n\n\n\n\n", ph_stats[i]->id, dif);
+			printf("philo %d com %ld de jejum entrou na morte ?????????????????\n\n\n\n\n\n\n", ph_stats[i]->id, dif);
 			exit(0); //colocar os frees
 		}
 		i++;
@@ -53,6 +53,8 @@ void*	thread_monitor(void *args)
 	t_ph_status	**ph_stats;
 
 	ph_stats = (t_ph_status **) args;
+	pthread_mutex_lock(ph_stats[0]->print_lock);
+	pthread_mutex_unlock(ph_stats[0]->print_lock);
 	while (1)
 		death_monitor(ph_stats);
 }
@@ -69,15 +71,14 @@ int	main(int argc, char **argv)
 	ph_stats = init_ph_stats(argv, init);
 	i = -1;
 	while (++i < ph_stats[0]->total_ph)
-		printf("ph_stats[%d]->id = %d\n", i, ph_stats[i]->t_die);
-	i = -1;
-	while (++i < ph_stats[0]->total_ph)
 		pthread_create(&ph_stats[i]->pthread_ph, NULL, &philo_routine, ph_stats[i]);
+	
+	pthread_mutex_lock(ph_stats[0]->print_lock);
+	pthread_mutex_unlock(ph_stats[0]->print_lock);
+	pthread_create(&monitor, NULL, &thread_monitor, ph_stats);
 	i = -1;
 	while (++i < ph_stats[0]->total_ph)
 		pthread_join(ph_stats[i]->pthread_ph, NULL);
-	
-	pthread_create(&monitor, NULL, &thread_monitor, ph_stats);
 	pthread_join(monitor, NULL);
 	
 	return(0);

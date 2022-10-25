@@ -6,7 +6,7 @@
 /*   By: daeidi-h <daeidi-h@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 16:45:40 by daeidi-h          #+#    #+#             */
-/*   Updated: 2022/10/21 10:21:28 by daeidi-h         ###   ########.fr       */
+/*   Updated: 2022/10/25 11:32:09 by daeidi-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ t_ph_status	**init_ph_stats(char **argv, long init)
 		ph_stats[i]->print_lock = print_lock;
 		ph_stats[i]->total_ph = n_philo;
 		ph_stats[i]->t_die = ft_atoi(argv[2]) * 1000;
-		printf("ph_stats[%d]->id = %d\n", i, ph_stats[i]->id);
 		ph_stats[i]->t_eat = ft_atoi(argv[3]) * 1000;
 		ph_stats[i]->t_sleep = ft_atoi(argv[4]) * 1000;
 		if (argv[5])
