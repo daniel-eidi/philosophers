@@ -6,7 +6,7 @@
 /*   By: daeidi-h <daeidi-h@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:55:24 by daeidi-h          #+#    #+#             */
-/*   Updated: 2022/10/25 11:45:25 by daeidi-h         ###   ########.fr       */
+/*   Updated: 2022/10/26 20:02:26 by daeidi-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void death_monitor (t_ph_status	**ph_stats)
 	}
 }
 
-void*	thread_monitor(void *args)
+void	*thread_monitor(void *args)
 {
 	t_ph_status	**ph_stats;
 
@@ -58,27 +58,41 @@ void*	thread_monitor(void *args)
 	while (1)
 		death_monitor(ph_stats);
 }
+void *thread_main(void *args)
+{
+	t_ph_status	**ph_stats;
+	int			i;
+
+	ph_stats = (t_ph_status	**)args;
+	i = -1;
+	while (++i < ph_stats[0]->total_ph)
+		pthread_create(&ph_stats[i]->pthread_ph, NULL, &philo_routine, ph_stats[i]);
+	i = -1;
+	while (++i < ph_stats[0]->total_ph)
+		pthread_join(ph_stats[i]->pthread_ph, NULL);
+	return (NULL);
+}
 
 int	main(int argc, char **argv)
 {
 	long init;
 	t_ph_status	**ph_stats;
-	int i;
+	//int i;
 	pthread_t	monitor;
+	pthread_t	main_thread;
 
 	(void)argc;
 	init = init_time();
 	ph_stats = init_ph_stats(argv, init);
-	i = -1;
-	while (++i < ph_stats[0]->total_ph)
-		pthread_create(&ph_stats[i]->pthread_ph, NULL, &philo_routine, ph_stats[i]);
-	
-	pthread_mutex_lock(ph_stats[0]->print_lock);
-	pthread_mutex_unlock(ph_stats[0]->print_lock);
+	// i = -1;
+	// while (++i < ph_stats[0]->total_ph)
+	// 	pthread_create(&ph_stats[i]->pthread_ph, NULL, &philo_routine, ph_stats[i]);
+	pthread_create(&main_thread, NULL, &thread_main, ph_stats);
 	pthread_create(&monitor, NULL, &thread_monitor, ph_stats);
-	i = -1;
-	while (++i < ph_stats[0]->total_ph)
-		pthread_join(ph_stats[i]->pthread_ph, NULL);
+	// i = -1;
+	// while (++i < ph_stats[0]->total_ph)
+	// 	pthread_join(ph_stats[i]->pthread_ph, NULL);
+	pthread_join(main_thread, NULL);
 	pthread_join(monitor, NULL);
 	
 	return(0);
