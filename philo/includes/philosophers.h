@@ -6,7 +6,7 @@
 /*   By: daeidi-h <daeidi-h@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 22:32:00 by daeidi-h          #+#    #+#             */
-/*   Updated: 2022/10/20 19:17:52 by daeidi-h         ###   ########.fr       */
+/*   Updated: 2022/10/28 16:16:22 by daeidi-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,21 @@
 
 typedef struct s_philos_status
 {
-	int			id;
-	pthread_t	pthread_ph;
-	long	init;
-	long	lst_philos_meal;
-	int		changed_status;
-	int		status;
-	int		total_ph;
-	int		t_die;
-	int		t_eat;
-	int		t_sleep;
-	int		max_eat;
-	int		n_eat;
-	pthread_mutex_t *left_fork;
-	pthread_mutex_t *right_fork;
-	pthread_mutex_t *print_lock;
+	int				id;
+	pthread_t		pthread_ph;
+	long			init;
+	long			lst_philos_meal;
+	int				changed_status;
+	int				status;
+	int				total_ph;
+	int				t_die;
+	int				t_eat;
+	int				t_sleep;
+	int				max_eat;
+	int				n_eat;
+	pthread_mutex_t	*left_fork;
+	pthread_mutex_t	*right_fork;
+	pthread_mutex_t	*print_lock;
 }	t_ph_status;
 
 int					ft_atoi(const char *str);
@@ -48,9 +48,10 @@ size_t				ft_strlen(const char *s);
 void				*ft_memset(void *s, int c, size_t n);
 void				ft_bzero(void *s, size_t n);
 
-
-pthread_mutex_t		**init_forks (int n_philo);
+pthread_mutex_t		**init_forks(int n_philo);
 t_ph_status			**init_ph_stats(char **argv, long init);
 long				current_time(long init);
+void				*philo_routine(void *args);
+void				print_actual_time(int long init);
 
 #endif

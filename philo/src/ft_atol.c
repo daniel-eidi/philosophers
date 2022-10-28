@@ -6,7 +6,7 @@
 /*   By: daeidi-h <daeidi-h@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 18:10:53 by daeidi-h          #+#    #+#             */
-/*   Updated: 2022/10/20 19:14:12 by daeidi-h         ###   ########.fr       */
+/*   Updated: 2022/10/28 16:44:55 by daeidi-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ static int	ft_isdigit(int c)
 long long	ft_atol(const char *str)
 {
 	unsigned long long		nbr;
-	unsigned long		sign;
-	unsigned long		i;
+	unsigned long			sign;
+	unsigned long			i;
 
 	nbr = 0;
 	sign = 1;
