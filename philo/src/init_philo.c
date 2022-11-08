@@ -6,7 +6,7 @@
 /*   By: daeidi-h <daeidi-h@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 16:45:40 by daeidi-h          #+#    #+#             */
-/*   Updated: 2022/10/28 16:46:57 by daeidi-h         ###   ########.fr       */
+/*   Updated: 2022/11/07 17:41:00 by daeidi-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	init_philo_forks(t_ph_status	**ph_stats, int i, \
 						pthread_mutex_t **forks, int n_philo)
 {
 	ph_stats[i]->total_ph = n_philo;
+	ph_stats[i]->forks = forks;
 	ph_stats[i]->left_fork = forks[i];
 	if (i + 1 == n_philo)
 		ph_stats[i]->right_fork = forks[0];

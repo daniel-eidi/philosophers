@@ -19,6 +19,7 @@ SRC 		=	main.c \
 				init_philo.c \
 				philo_routine.c \
 				current_time.c \
+				free.c \
 
 
 
@@ -68,7 +69,7 @@ re: fclean all
 rebonus: fclean bonus
 
 leaks: 
-	@$(LEAKS) ./$(NAME)
+	@$(LEAKS) ./$(NAME) 4 1010 200 200
 	@printf "$(GR)Leaks log ready! Check valgrind-out.txt $(RC)\n\n"
 
 cleanleaks: 

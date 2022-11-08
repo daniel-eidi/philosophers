@@ -1,0 +1,50 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: daeidi-h <daeidi-h@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/06 12:13:29 by daeidi-h          #+#    #+#             */
+/*   Updated: 2022/11/07 18:00:23 by daeidi-h         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#	include<philosophers.h>
+
+void	free_ptr(void **ptr)
+{
+	if (*ptr != NULL)
+	{
+		free(*ptr);
+		*ptr = NULL;
+	}
+}
+
+void	free_ptr_ptr(void **ptr)
+{
+	int	i;
+
+	i = 0;
+	while (ptr[i])
+		free_ptr((void *) &ptr[i++]);
+}
+
+void	free_ph_stats(t_ph_status	**ph_stats)
+{
+// 	t_ph_status	**ph_stats;
+	int i;
+ 	int n_philo;
+
+	i = 0;
+	n_philo = ph_stats[0]->total_ph;
+	free_ptr((void *) &ph_stats[0]->print_lock);
+	while (i <= n_philo)
+	{
+		pthread_mutex_destroy(ph_stats[i]->left_fork);
+		free_ptr((void *) ph_stats[0]->forks);
+		free_ptr((void *) &ph_stats[i]);
+		i++;
+	}
+	free((void *)ph_stats);
+}

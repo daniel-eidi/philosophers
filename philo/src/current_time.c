@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   current_time.c                                     :+:      :+:    :+:   */
+/*   time.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: daeidi-h <daeidi-h@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include <philosophers.h>
 
-long	current_time(long init)
+long	now(long init)
 {
 	struct timeval	tv;
 	struct timezone	tz;
@@ -29,6 +29,6 @@ void	print_actual_time(int long init)
 {
 	long	diff;
 
-	diff = current_time(init);
+	diff = now(init);
 	printf("ms: %ld ", diff);
 }
