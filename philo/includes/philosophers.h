@@ -6,7 +6,7 @@
 /*   By: daeidi-h <daeidi-h@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 22:32:00 by daeidi-h          #+#    #+#             */
-/*   Updated: 2022/11/08 10:38:40 by daeidi-h         ###   ########.fr       */
+/*   Updated: 2022/11/08 17:17:00 by daeidi-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 typedef struct s_philos_status
 {
 	int				id;
+	pthread_t		monitor;
 	pthread_t		pthread_ph;
 	long			init;
 	long			lst_philos_meal;
