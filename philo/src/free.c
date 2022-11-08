@@ -6,7 +6,7 @@
 /*   By: daeidi-h <daeidi-h@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 12:13:29 by daeidi-h          #+#    #+#             */
-/*   Updated: 2022/11/07 18:00:23 by daeidi-h         ###   ########.fr       */
+/*   Updated: 2022/11/08 16:28:31 by daeidi-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	free_ptr(void **ptr)
 {
-	if (*ptr != NULL)
+	if (*ptr)
 	{
 		free(*ptr);
 		*ptr = NULL;
@@ -39,12 +39,12 @@ void	free_ph_stats(t_ph_status	**ph_stats)
 	i = 0;
 	n_philo = ph_stats[0]->total_ph;
 	free_ptr((void *) &ph_stats[0]->print_lock);
-	while (i <= n_philo)
+	while (i < n_philo)
 	{
 		pthread_mutex_destroy(ph_stats[i]->left_fork);
-		free_ptr((void *) ph_stats[0]->forks);
+		free_ptr((void *) ph_stats[i]->forks);
 		free_ptr((void *) &ph_stats[i]);
 		i++;
 	}
-	free((void *)ph_stats);
+	free_ptr((void *)ph_stats);
 }

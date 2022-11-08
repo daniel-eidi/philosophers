@@ -6,7 +6,7 @@
 /*   By: daeidi-h <daeidi-h@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 16:45:40 by daeidi-h          #+#    #+#             */
-/*   Updated: 2022/11/07 17:41:00 by daeidi-h         ###   ########.fr       */
+/*   Updated: 2022/11/08 11:33:11 by daeidi-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ pthread_mutex_t	**init_forks(int n_philo)
 		pthread_mutex_init(forks[i], NULL);
 		i++;
 	}
-	forks[i] = calloc(sizeof(pthread_mutex_t), 1);
+	forks[i] = NULL;
 	return (forks);
 }
 

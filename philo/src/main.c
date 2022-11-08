@@ -6,7 +6,7 @@
 /*   By: daeidi-h <daeidi-h@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:55:24 by daeidi-h          #+#    #+#             */
-/*   Updated: 2022/11/08 10:48:03 by daeidi-h         ###   ########.fr       */
+/*   Updated: 2022/11/08 11:04:00 by daeidi-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,8 @@ void	death_monitor(t_ph_status	**ph_stats)
 		if (dif > (ph_stats[i]->t_die / 1000))
 		{
 			pthread_mutex_lock(ph_stats[i]->print_lock);
-			print_actual_time(ph_stats[i]->init);
-			printf("philo %d com %ld de jejum morreu \n\n\n\n\n\n\n", \
-					ph_stats[i]->id, dif);
+			printf("%ld %d died \
+			after %ld ms de jejum\n", now(ph_stats[i]->init), ph_stats[i]->id, dif);
 			free_ph_stats(ph_stats);
 			exit(0);
 		}
