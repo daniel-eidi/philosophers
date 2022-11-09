@@ -15,7 +15,7 @@ int	death_monitor(t_ph_status	**ph_stats)
 			pthread_mutex_lock(ph_stats[i]->print_lock);
 			printf("%ld %d died \
 			after %ld ms de jejum\n", now(ph_stats[i]->init), ph_stats[i]->id, dif);
-			free_ph_stats(ph_stats);
+			//free_ph_stats(ph_stats);
 			*ph_stats[i]->exit = 1;
 			return (1);
 		}
@@ -38,9 +38,10 @@ int	max_meal(t_ph_status	**ph_stats)
 			count_ph++;
 		i++;
 	}
-	if(ph_stats[0]->total_ph == count_ph)
+	if(count_ph == ph_stats[0]->total_ph)
 	{
-		*ph_stats[i]->exit = 1;
+		pthread_mutex_lock(ph_stats[0]->print_lock);
+		*ph_stats[0]->exit = 1;
 		return (1);
 	}
 	return (0);

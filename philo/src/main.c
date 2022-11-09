@@ -6,7 +6,7 @@
 /*   By: daeidi-h <daeidi-h@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:55:24 by daeidi-h          #+#    #+#             */
-/*   Updated: 2022/11/08 17:22:18 by daeidi-h         ###   ########.fr       */
+/*   Updated: 2022/11/09 21:00:50 by daeidi-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,6 @@ int	main(int argc, char **argv)
 	while (++i < ph_stats[0]->total_ph)
 		pthread_join(ph_stats[i]->pthread_ph, NULL);
 	pthread_join(ph_stats[0]->monitor, NULL);
+	free_ph_stats(ph_stats);
 	return (0);
 }
