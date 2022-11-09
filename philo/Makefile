@@ -18,6 +18,7 @@ SRC 		=	main.c \
 				ft_memset.c \
 				init_philo.c \
 				philo_routine.c \
+				thread_monitor.c \
 				current_time.c \
 				free.c \
 

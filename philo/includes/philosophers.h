@@ -36,6 +36,7 @@ typedef struct s_philos_status
 	int				t_sleep;
 	int				max_eat;
 	int				n_eat;
+	int				*exit;
 	pthread_mutex_t	**forks;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
@@ -55,7 +56,8 @@ t_ph_status			**init_ph_stats(char **argv, long init);
 long				now(long init);
 void				*philo_routine(void *args);
 void				print_actual_time(int long init);
+void				*thread_monitor(void *args);
 
-void	free_ph_stats(t_ph_status	**ph_stats);
+void				free_ph_stats(t_ph_status	**ph_stats);
 
 #endif

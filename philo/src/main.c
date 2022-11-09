@@ -23,39 +23,6 @@ long	init_time(void)
 	return (init);
 }
 
-void	death_monitor(t_ph_status	**ph_stats)
-{
-	int		i;
-	long	dif;
-
-	i = 0;
-	dif = 0;
-	while (i < ph_stats[0]->total_ph)
-	{
-		dif = now(ph_stats[i]->init) - ph_stats[i]->lst_philos_meal;
-		if (dif > (ph_stats[i]->t_die / 1000))
-		{
-			pthread_mutex_lock(ph_stats[i]->print_lock);
-			printf("%ld %d died \
-			after %ld ms de jejum\n", now(ph_stats[i]->init), ph_stats[i]->id, dif);
-			free_ph_stats(ph_stats);
-			exit(0);
-		}
-		i++;
-	}
-}
-
-void	*thread_monitor(void *args)
-{
-	t_ph_status	**ph_stats;
-
-	ph_stats = (t_ph_status **) args;
-	pthread_mutex_lock(ph_stats[0]->print_lock);
-	pthread_mutex_unlock(ph_stats[0]->print_lock);
-	while (1)
-		death_monitor(ph_stats);
-}
-
 int	main(int argc, char **argv)
 {
 	long		init;
