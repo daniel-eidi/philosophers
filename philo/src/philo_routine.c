@@ -6,7 +6,7 @@
 /*   By: daeidi-h <daeidi-h@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 15:56:20 by daeidi-h          #+#    #+#             */
-/*   Updated: 2022/11/09 16:09:41 by daeidi-h         ###   ########.fr       */
+/*   Updated: 2022/11/09 22:15:21 by daeidi-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,7 @@ static void	get_fork(t_ph_status *ph_stats)
 			return ;
 		if (exit_or_mutex_print(ph_stats))
 			return ;
-		printf("%ld %d is eating \
-		after %ld ms de jejum\n", now(ph_stats->init), ph_stats->id, dif);
+		printf("%ld %d is eating\n", now(ph_stats->init), ph_stats->id);
 		pthread_mutex_unlock(ph_stats->print_lock);
 		ph_stats->lst_philos_meal = now(ph_stats->init);
 		usleep(ph_stats->t_eat);
