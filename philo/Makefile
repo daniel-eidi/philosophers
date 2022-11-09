@@ -70,7 +70,7 @@ re: fclean all
 rebonus: fclean bonus
 
 leaks: 
-	@$(LEAKS) ./$(NAME) 4 1010 200 200
+	@$(LEAKS) ./$(NAME) 4 10010 200 200 3
 	@printf "$(GR)Leaks log ready! Check valgrind-out.txt $(RC)\n\n"
 
 cleanleaks: 

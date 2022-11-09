@@ -6,7 +6,7 @@
 /*   By: daeidi-h <daeidi-h@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 16:45:40 by daeidi-h          #+#    #+#             */
-/*   Updated: 2022/11/09 17:42:36 by daeidi-h         ###   ########.fr       */
+/*   Updated: 2022/11/09 15:34:18 by daeidi-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,10 @@ void	init_philo_forks(t_ph_status	**ph_stats, int i, \
 
 static void	malloc_exit_status(t_ph_status	**ph_stats)
 {
-	int *exit;
+	int	*exit;
 	int	i;
 
 	exit = (int *)malloc(sizeof(int));
-
 	*exit = 0;
 	i = -1;
 	while (ph_stats[++i])
