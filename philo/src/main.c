@@ -6,7 +6,7 @@
 /*   By: daeidi-h <daeidi-h@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:55:24 by daeidi-h          #+#    #+#             */
-/*   Updated: 2022/11/09 21:00:50 by daeidi-h         ###   ########.fr       */
+/*   Updated: 2022/11/10 15:50:38 by daeidi-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,40 @@ long	init_time(void)
 	return (init);
 }
 
+void	error(void)
+{
+	printf("Wrong args!!!\n");
+	exit(1);
+}
+
+void	check_args(int argc, char **argv)
+{
+	int	i;
+	int j;
+
+	if (argc < 5 || argc > 6)
+		error();
+	i = 0;
+	while (++i < argc)
+	{
+		j = 0;
+		while(argv[i][j])
+		{
+			if (!ft_isdigit(argv[i][j]))
+				error();
+			j++;
+		}
+	}
+}
+
 int	main(int argc, char **argv)
 {
 	long		init;
 	t_ph_status	**ph_stats;
 	int			i;
 
-	(void)argc;
 	init = init_time();
+	check_args(argc, argv);
 	ph_stats = init_ph_stats(argv, init);
 	pthread_create(&ph_stats[0]->pthread_ph, \
 					NULL, &philo_routine, ph_stats[0]);

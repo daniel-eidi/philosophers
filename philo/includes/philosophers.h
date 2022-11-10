@@ -6,7 +6,7 @@
 /*   By: daeidi-h <daeidi-h@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 22:32:00 by daeidi-h          #+#    #+#             */
-/*   Updated: 2022/11/08 17:17:00 by daeidi-h         ###   ########.fr       */
+/*   Updated: 2022/11/10 15:48:35 by daeidi-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_philos_status
 	pthread_mutex_t	*print_lock;
 }	t_ph_status;
 
+int					ft_isdigit(int c);
 int					ft_atoi(const char *str);
 long long			ft_atol(const char *str);
 char				*ft_itoa(long n);
