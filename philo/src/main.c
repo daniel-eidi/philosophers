@@ -6,7 +6,7 @@
 /*   By: daeidi-h <daeidi-h@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:55:24 by daeidi-h          #+#    #+#             */
-/*   Updated: 2022/11/11 09:31:19 by daeidi-h         ###   ########.fr       */
+/*   Updated: 2022/11/11 16:22:47 by daeidi-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,9 @@ int	main(int argc, char **argv)
 	i = -1;
 	while (++i < ph_stats[0]->total_ph)
 		pthread_join(ph_stats[i]->pthread_ph, NULL);
-	pthread_detach(ph_stats[0]->monitor);
+	pthread_join(ph_stats[0]->monitor, NULL);	
+	if (*ph_stats[0]->exit > 0)
+		printf("%ld %d died\n", now(ph_stats[0]->init), *ph_stats[0]->exit);
 	free_ph_stats(ph_stats);
 	return (0);
 }

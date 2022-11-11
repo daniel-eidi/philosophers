@@ -6,7 +6,7 @@
 /*   By: daeidi-h <daeidi-h@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 15:56:20 by daeidi-h          #+#    #+#             */
-/*   Updated: 2022/11/09 22:15:21 by daeidi-h         ###   ########.fr       */
+/*   Updated: 2022/11/11 16:06:36 by daeidi-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	exit_or_mutex_print(t_ph_status *ph_stats)
 {
-	if (*ph_stats->exit == 1)
+	if (*ph_stats->exit != 0)
 	{
 		pthread_mutex_unlock(ph_stats->left_fork);
 		pthread_mutex_unlock(ph_stats->right_fork);
