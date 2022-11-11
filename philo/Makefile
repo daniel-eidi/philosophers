@@ -13,7 +13,7 @@ SRC 		=	main.c \
 				ft_atol.c \
 				ft_calloc.c \
 				ft_itoa.c \
-				ft_isdigit.c \
+				ft_isdigit.c\
 				ft_strlen.c \
 				ft_bzero.c \
 				ft_memset.c \

@@ -6,7 +6,7 @@
 /*   By: daeidi-h <daeidi-h@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 18:10:53 by daeidi-h          #+#    #+#             */
-/*   Updated: 2022/10/20 19:16:47 by daeidi-h         ###   ########.fr       */
+/*   Updated: 2022/11/10 17:31:39 by daeidi-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,6 @@
  * @param str 
  * @return long 
  */
-
-static int	ft_isdigit(int c)
-{
-	if (c >= '0' && c <= '9')
-		return (1);
-	else
-		return (0);
-}
 
 int	ft_atoi(const char *str)
 {
